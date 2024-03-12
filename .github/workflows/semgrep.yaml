@@ -1,8 +1,6 @@
 # Name of this GitHub Actions workflow.
 name: Semgrep
 
-# adding comment to do full scan
-
 on:
   # Scan changed files in PRs (diff-aware scanning):
   pull_request: {}
@@ -13,9 +11,8 @@ on:
     branches: ["master", "main"]
   # Schedule the CI job (this method uses cron syntax):
   schedule:
-    - cron: '20 16 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
+    - cron: '20 17 * * *' # Sets Semgrep to scan every day at 17:20 UTC.
     # It is recommended to change the schedule to a random time.
-    # Comment for commit
 
 jobs:
   semgrep:
