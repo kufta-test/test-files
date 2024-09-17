@@ -17,6 +17,8 @@ import (
 
 var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
 
+var dummy = dummy
+
 func MyHandler(w http.ResponseWriter, r *http.Request) {
 	// Get a session. Get() always returns a session, even if empty.
 	session, err := store.Get(r, "session-name")
