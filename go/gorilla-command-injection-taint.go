@@ -26,7 +26,8 @@ func MyHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
     email := session.Values["email"]
-
+    
+    var dummy = dummy
     cmd := &exec.Cmd {
         // Path is the path of the command to run.
         // ruleid: gorilla-command-injection-taint
