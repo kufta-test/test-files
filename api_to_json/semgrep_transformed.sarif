@@ -1,0 +1,1407 @@
+{
+    "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+    "version": "2.1.0",
+    "runs": [
+        {
+            "tool": {
+                "driver": {
+                    "name": "Semgrep",
+                    "informationUri": "https://semgrep.dev",
+                    "rules": [
+                        {
+                            "id": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                            "shortDescription": {
+                                "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                            },
+                            "fullDescription": {
+                                "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-command-injection-taint.go#L33",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                            "shortDescription": {
+                                "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                            },
+                            "fullDescription": {
+                                "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-go-vanillasql-format-string-sqli-taint.go#L33",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                            "shortDescription": {
+                                "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                            },
+                            "fullDescription": {
+                                "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-go-vanillasql-format-string-sqli-taint.go#L33",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.lang.security.audit.dangerous-command-write.dangerous-command-write",
+                            "shortDescription": {
+                                "text": "Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "fullDescription": {
+                                "text": "Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-command-injection-taint.go#L50",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                            "shortDescription": {
+                                "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "fullDescription": {
+                                "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-command-injection-taint.go#L30",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.lang.security.audit.dangerous-syscall-exec.dangerous-syscall-exec",
+                            "shortDescription": {
+                                "text": "Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "fullDescription": {
+                                "text": "Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-command-injection-taint.go#L57",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                            "shortDescription": {
+                                "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                            },
+                            "fullDescription": {
+                                "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-go-vanillasql-format-string-sqli-taint.go#L33",
+                            "properties": {
+                                "severity": "high"
+                            }
+                        },
+                        {
+                            "id": "go.gorilla.security.audit.websocket-missing-origin-check.websocket-missing-origin-check",
+                            "shortDescription": {
+                                "text": "The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request Forgery (CSRF). As per \"gorilla/websocket\" documentation: \"A CheckOrigin function should carefully validate the request origin to prevent cross-site request forgery.\""
+                            },
+                            "fullDescription": {
+                                "text": "The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request Forgery (CSRF). As per \"gorilla/websocket\" documentation: \"A CheckOrigin function should carefully validate the request origin to prevent cross-site request forgery.\""
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-command-injection-taint.go#L154",
+                            "properties": {
+                                "severity": "medium"
+                            }
+                        },
+                        {
+                            "id": "go.lang.security.audit.database.string-formatted-query.string-formatted-query",
+                            "shortDescription": {
+                                "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                            },
+                            "fullDescription": {
+                                "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                            },
+                            "helpUri": "https://github.com/kufta-test/test-files/blob/6004b726bf6a14289d84168dc484514df280a5fd/go/gorilla-go-vanillasql-format-string-sqli-taint.go#L31",
+                            "properties": {
+                                "severity": "medium"
+                            }
+                        }
+                    ]
+                }
+            },
+            "results": [
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 33,
+                                    "startColumn": 15,
+                                    "endLine": 33,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "2be3458d425b943ec67ff16978efd4a2"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 50,
+                                    "startColumn": 5,
+                                    "endLine": 50,
+                                    "endColumn": 47
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "ea98a3d6cc909d16a9fc5a5d27c3f471"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 53,
+                                    "startColumn": 32,
+                                    "endLine": 53,
+                                    "endColumn": 41
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "00f77fd00440d27053a2fa214484b050"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 77,
+                                    "startColumn": 15,
+                                    "endLine": 77,
+                                    "endColumn": 26
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "ab67a120923ed7a1417303395d496ef7"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 108,
+                                    "startColumn": 23,
+                                    "endLine": 108,
+                                    "endColumn": 35
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "918be49368712b637d41fb1293acb5a4"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 134,
+                                    "startColumn": 19,
+                                    "endLine": 134,
+                                    "endColumn": 31
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "f7ef4db420852efb0aa005a0e2c8c4bb"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 161,
+                                    "startColumn": 15,
+                                    "endLine": 161,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "d714c035280ba0559e4a5e06c7a80314"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 179,
+                                    "startColumn": 15,
+                                    "endLine": 179,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "c5fc2e6cb98ead8947cf23e6f970485d"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 208,
+                                    "startColumn": 15,
+                                    "endLine": 208,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "669a0a2de34d52a08dbeb9f0c0cfe659"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 225,
+                                    "startColumn": 5,
+                                    "endLine": 225,
+                                    "endColumn": 47
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "10f575027bdc5f8958a2c93a42ac324a"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 228,
+                                    "startColumn": 32,
+                                    "endLine": 228,
+                                    "endColumn": 41
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "4a6b7e20356e1393f2ed1d01736d966f"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 252,
+                                    "startColumn": 15,
+                                    "endLine": 252,
+                                    "endColumn": 26
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "6725459d8eca427c0fadd4f2850e78a1"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 283,
+                                    "startColumn": 23,
+                                    "endLine": 283,
+                                    "endColumn": 35
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "b5ddad29872b19014f94338bf566cb36"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 309,
+                                    "startColumn": 19,
+                                    "endLine": 309,
+                                    "endColumn": 31
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "483c701809242cc2750c45e3a203028f"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 336,
+                                    "startColumn": 15,
+                                    "endLine": 336,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "d0f2ad908c5e920a6ce6b7872c1f938c"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint",
+                    "message": {
+                        "text": "Untrusted input might be injected into a command executed by the application, which can lead to a command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining complete control of the system. To prevent this vulnerability, avoid executing OS commands with user input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash -c` command to run the user input as a shell command. To sanitize the user input, you can use a library like `shellescape` to escape any special characters before constructing the command. For more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-command-injection/)"
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 354,
+                                    "startColumn": 15,
+                                    "endLine": 354,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "e6ae983cafbff01ed0cacc817a0f8c20"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 33,
+                                    "startColumn": 11,
+                                    "endLine": 33,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "0326d97d7405552cbcb33973df74f757"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 52,
+                                    "startColumn": 11,
+                                    "endLine": 52,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "1335702899bfadd5f098904734de5bf9"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 75,
+                                    "startColumn": 15,
+                                    "endLine": 75,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "e4e8616a05dd11ad31ff4668d5f5d41f"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 92,
+                                    "startColumn": 15,
+                                    "endLine": 92,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "dace9c09f7c4cf1e96335631e4d6bea5"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-sqli-taint-med-conf",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 114,
+                                    "startColumn": 11,
+                                    "endLine": 114,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "8643dc222bf492be36b4b4d1cc52ccc6"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 33,
+                                    "startColumn": 11,
+                                    "endLine": 33,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "26ac9c0b61f437cbc936efdb501f92dc"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 52,
+                                    "startColumn": 11,
+                                    "endLine": 52,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "0ddecaef44382274328bbdc27e46ca5d"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 75,
+                                    "startColumn": 15,
+                                    "endLine": 75,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "df8c5076fcffddface8bd376739582bd"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 92,
+                                    "startColumn": 15,
+                                    "endLine": 92,
+                                    "endColumn": 20
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "04d4a6cbf1a733b633b13721780c4d88"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint",
+                    "message": {
+                        "text": "Untrusted input might be used to build a database query, which can lead to a SQL injection vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this vulnerability, use prepared statements that do not concatenate user-controllable strings and use parameterized queries where SQL commands and user data are strictly separated. Also, consider using an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls with parameterized queries. For more information, see: [Prepared statements in Go](https://go.dev/doc/database/prepared-statements)."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 114,
+                                    "startColumn": 11,
+                                    "endLine": 114,
+                                    "endColumn": 16
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "5cbefe2d84042216cab9cf03dd2bf581"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-command-write.dangerous-command-write",
+                    "message": {
+                        "text": "Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 50,
+                                    "startColumn": 5,
+                                    "endLine": 50,
+                                    "endColumn": 47
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "1eb885073c67b76435872054a30e6277"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-command-write.dangerous-command-write",
+                    "message": {
+                        "text": "Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 225,
+                                    "startColumn": 5,
+                                    "endLine": 225,
+                                    "endColumn": 47
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "01d26702d7f143a51f2ff9121c7aad74"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 30,
+                                    "startColumn": 13,
+                                    "endLine": 38,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "5b292db5c746c24445c77940fd0a0f00"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 74,
+                                    "startColumn": 13,
+                                    "endLine": 82,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "8ae44ff712f58fba2d28d97fd138e5db"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 105,
+                                    "startColumn": 21,
+                                    "endLine": 113,
+                                    "endColumn": 14
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "5988a96f4a9446ddf4040a2cddfe0cd7"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 131,
+                                    "startColumn": 17,
+                                    "endLine": 139,
+                                    "endColumn": 10
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "ee9b938e3b8ad42a5602ad059eef348a"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 158,
+                                    "startColumn": 13,
+                                    "endLine": 166,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "5e15ecd906fda1e84743332e1905e00c"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 176,
+                                    "startColumn": 12,
+                                    "endLine": 184,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "ef23ab542075d51de4e6fc1ddb9880ed"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 205,
+                                    "startColumn": 13,
+                                    "endLine": 213,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "75d294b4261a195e7dc6727dd7ed8f0c"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 249,
+                                    "startColumn": 13,
+                                    "endLine": 257,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "bb688d7921071d19b940f77a8dc80141"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 280,
+                                    "startColumn": 21,
+                                    "endLine": 288,
+                                    "endColumn": 14
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "7efda0c2f71575b9dc09e43ef01a5026"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 306,
+                                    "startColumn": 17,
+                                    "endLine": 314,
+                                    "endColumn": 10
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "d2ef91f22d7bc03b0173e514806bc721"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 333,
+                                    "startColumn": 13,
+                                    "endLine": 341,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "fe78e4dfcc6d3486e2a6c064af66621a"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd",
+                    "message": {
+                        "text": "Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 351,
+                                    "startColumn": 12,
+                                    "endLine": 359,
+                                    "endColumn": 6
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "c88b3a3e928991d86701e8d1b84b8610"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-syscall-exec.dangerous-syscall-exec",
+                    "message": {
+                        "text": "Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 57,
+                                    "startColumn": 5,
+                                    "endLine": 57,
+                                    "endColumn": 38
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "82b8d89fe32d588bd77ed0ea11afecb3"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.dangerous-syscall-exec.dangerous-syscall-exec",
+                    "message": {
+                        "text": "Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data can reach this call site, this is a code injection vulnerability. A malicious actor can inject a malicious script to execute arbitrary code."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 232,
+                                    "startColumn": 5,
+                                    "endLine": 232,
+                                    "endColumn": 38
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "99d43eff2d878d0bdfbf20a460daa3de"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                    "message": {
+                        "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 33,
+                                    "startColumn": 2,
+                                    "endLine": 33,
+                                    "endColumn": 17
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "e036b0d73c3cdb13f1e8521aeb1b790d"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                    "message": {
+                        "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 52,
+                                    "startColumn": 2,
+                                    "endLine": 52,
+                                    "endColumn": 17
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "aad255c821ffcb755892540421e7f425"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                    "message": {
+                        "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 75,
+                                    "startColumn": 6,
+                                    "endLine": 75,
+                                    "endColumn": 21
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "41f1183cf8bf0fd74b89a21e42cc762e"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                    "message": {
+                        "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 92,
+                                    "startColumn": 6,
+                                    "endLine": 92,
+                                    "endColumn": 21
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "4a9260881bc70099ea9be92f484c3518"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.sqli.gosql-sqli.gosql-sqli",
+                    "message": {
+                        "text": "Detected string concatenation with a non-literal variable in a \"database/sql\" Go SQL statement. This could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order to prevent SQL injection, use parameterized queries or prepared statements instead. You can use prepared statements with the 'Prepare' and 'PrepareContext' calls."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 114,
+                                    "startColumn": 2,
+                                    "endLine": 114,
+                                    "endColumn": 17
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "9d6184f512b5be422c325526de04d17d"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.security.audit.websocket-missing-origin-check.websocket-missing-origin-check",
+                    "message": {
+                        "text": "The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request Forgery (CSRF). As per \"gorilla/websocket\" documentation: \"A CheckOrigin function should carefully validate the request origin to prevent cross-site request forgery.\""
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 154,
+                                    "startColumn": 18,
+                                    "endLine": 154,
+                                    "endColumn": 45
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "187c343e7130f9e9de24fe8646115dc3"
+                    }
+                },
+                {
+                    "ruleId": "go.gorilla.security.audit.websocket-missing-origin-check.websocket-missing-origin-check",
+                    "message": {
+                        "text": "The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request Forgery (CSRF). As per \"gorilla/websocket\" documentation: \"A CheckOrigin function should carefully validate the request origin to prevent cross-site request forgery.\""
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-command-injection-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 329,
+                                    "startColumn": 18,
+                                    "endLine": 329,
+                                    "endColumn": 45
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "bdfb3205919079dd445522d4a6eefe07"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.database.string-formatted-query.string-formatted-query",
+                    "message": {
+                        "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 31,
+                                    "startColumn": 5,
+                                    "endLine": 31,
+                                    "endColumn": 59
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "3036cf582f9dcb9902295ca95e16febb"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.database.string-formatted-query.string-formatted-query",
+                    "message": {
+                        "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 49,
+                                    "startColumn": 2,
+                                    "endLine": 49,
+                                    "endColumn": 60
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "0c2259144dfdb8f9f032cdc9a587cbee"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.database.string-formatted-query.string-formatted-query",
+                    "message": {
+                        "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 73,
+                                    "startColumn": 9,
+                                    "endLine": 73,
+                                    "endColumn": 70
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "704232d0907e8a1efb197685ba02041f"
+                    }
+                },
+                {
+                    "ruleId": "go.lang.security.audit.database.string-formatted-query.string-formatted-query",
+                    "message": {
+                        "text": "String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized properly. Audit this call to ensure the SQL is not manipulable by external data."
+                    },
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {
+                                    "uri": "go/gorilla-go-vanillasql-format-string-sqli-taint.go"
+                                },
+                                "region": {
+                                    "startLine": 112,
+                                    "startColumn": 5,
+                                    "endLine": 112,
+                                    "endColumn": 59
+                                }
+                            }
+                        }
+                    ],
+                    "partialFingerprints": {
+                        "primaryLocationLineHash": "4ef6968d2db334f5f911d549f86ed330"
+                    }
+                }
+            ]
+        }
+    ]
+}
