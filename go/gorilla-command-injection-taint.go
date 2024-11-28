@@ -37,6 +37,16 @@ func MyHandler(w http.ResponseWriter, r *http.Request) {
         Stderr: os.Stderr,
     }
 
+    cmd := &exec.Cmd {
+        // Path is the path of the command to run.
+        // ruleid: gorilla-command-injection-taint
+        Path: email,
+        // Args holds command line arguments, including the command as Args[0].
+        Args: []string{ "tr", "--help" },
+        Stdout: os.Stdout,
+        Stderr: os.Stderr,
+    }
+
     cmd.Start()
     cmd.Wait()
 
