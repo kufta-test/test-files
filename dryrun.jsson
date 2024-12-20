@@ -1,0 +1,1266 @@
+                                 
+                                 
+┌───────────────────────────────┐
+│ 53 Non-blocking Code Findings │
+└───────────────────────────────┘
+                                                        
+  [36m[22m[24m  go/gorilla-command-injection-taint.go[0m
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+           30┆ cmd := &exec.Cmd {
+           31┆     // Path is the path of the command to run.
+           32┆     // ruleid: gorilla-command-injection-taint
+           33┆     Path: email,
+           34┆     // Args holds command line arguments, including the command as Args[0].
+           35┆     Args: []string{ "tr", "--help" },
+           36┆     Stdout: os.Stdout,
+           37┆     Stderr: os.Stderr,
+           38┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+           33┆ Path: email,
+    
+    
+          Taint comes from:
+    
+           28┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+           28┆ email := session.Values["email"]
+    
+    
+                This is how taint reaches the sink:
+    
+           33┆ Path: email,
+    
+    
+            ⋮┆----------------------------------------
+           50┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+    
+    
+          Taint comes from:
+    
+           28┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+           28┆ email := session.Values["email"]
+    
+           47┆ cmd3Input := fmt.Sprintf("ls %s", email)
+    
+    
+                This is how taint reaches the sink:
+    
+           50┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-command-write.dangerous-command-write
+          Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user
+          data can reach this call site, this is a code injection vulnerability. A malicious actor can inject
+          a malicious script to execute arbitrary code.                                                      
+          Details: https://sg.run/Bko5                                                                       
+                                                                                                             
+           50┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+           53┆ io.WriteString(cmd3Writer, cmd3Input)
+    
+    
+          Taint comes from:
+    
+           28┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+           28┆ email := session.Values["email"]
+    
+           47┆ cmd3Input := fmt.Sprintf("ls %s", email)
+    
+    
+                This is how taint reaches the sink:
+    
+           53┆ io.WriteString(cmd3Writer, cmd3Input)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-syscall-exec.dangerous-syscall-exec
+          Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/0QRb                                                                       
+                                                                                                             
+           57┆ syscall.Exec("echo " + cmd4Input)
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+           74┆ cmd := &exec.Cmd {
+           75┆     // Path is the path of the command to run.
+           76┆     // ruleid: gorilla-command-injection-taint
+           77┆     Path: person.Name,
+           78┆     // Args holds command line arguments, including the command as Args[0].
+           79┆     Args: []string{ "tr", "--help" },
+           80┆     Stdout: os.Stdout,
+           81┆     Stderr: os.Stderr,
+           82┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+           77┆ Path: person.Name,
+    
+    
+          Taint comes from:
+    
+           77┆ Path: person.Name,
+    
+    
+                This is how taint reaches the sink:
+    
+           77┆ Path: person.Name,
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          105┆ cmd := &exec.Cmd {
+          106┆     // Path is the path of the command to run.
+          107┆     // ruleid: gorilla-command-injection-taint
+          108┆     Path: value["foo"],
+          109┆     // Args holds command line arguments, including the command as Args[0].
+          110┆     Args: []string{ "tr", "--help" },
+          111┆     Stdout: os.Stdout,
+          112┆     Stderr: os.Stderr,
+          113┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          108┆ Path: value["foo"],
+    
+    
+          Taint comes from:
+    
+          108┆ Path: value["foo"],
+    
+    
+                This is how taint reaches the sink:
+    
+          108┆ Path: value["foo"],
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          131┆ cmd := &exec.Cmd {
+          132┆     // Path is the path of the command to run.
+          133┆     // ruleid: gorilla-command-injection-taint
+          134┆     Path: value["foo"],
+          135┆     // Args holds command line arguments, including the command as Args[0].
+          136┆     Args: []string{ "tr", "--help" },
+          137┆     Stdout: os.Stdout,
+          138┆     Stderr: os.Stderr,
+          139┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          134┆ Path: value["foo"],
+    
+    
+          Taint comes from:
+    
+          134┆ Path: value["foo"],
+    
+    
+                This is how taint reaches the sink:
+    
+          134┆ Path: value["foo"],
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ go.gorilla.security.audit.websocket-missing-origin-check.websocket-missing-origin-check
+          The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted
+          by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request
+          Forgery (CSRF). As per "gorilla/websocket" documentation: "A CheckOrigin function should carefully 
+          validate the request origin to prevent cross-site request forgery."                                
+          Details: https://sg.run/xXpz                                                                       
+                                                                                                             
+          154┆ conn, err := upgrader.Upgrade(w, r, nil)
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          158┆ cmd := &exec.Cmd {
+          159┆     // Path is the path of the command to run.
+          160┆     // ruleid: gorilla-command-injection-taint
+          161┆     Path: email,
+          162┆     // Args holds command line arguments, including the command as Args[0].
+          163┆     Args: []string{ "tr", "--help" },
+          164┆     Stdout: os.Stdout,
+          165┆     Stderr: os.Stderr,
+          166┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          161┆ Path: email,
+    
+    
+          Taint comes from:
+    
+          155┆ messageType, p, err := conn.ReadMessage()
+    
+    
+          Taint flows through these intermediate variables:
+    
+          155┆ messageType, p, err := conn.ReadMessage()
+    
+          156┆ email := string(p)
+    
+    
+                This is how taint reaches the sink:
+    
+          161┆ Path: email,
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          176┆ cmd = &exec.Cmd {
+          177┆     // Path is the path of the command to run.
+          178┆     // ruleid: gorilla-command-injection-taint
+          179┆     Path: email,
+          180┆     // Args holds command line arguments, including the command as Args[0].
+          181┆     Args: []string{ "tr", "--help" },
+          182┆     Stdout: os.Stdout,
+          183┆     Stderr: os.Stderr,
+          184┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          179┆ Path: email,
+    
+    
+          Taint comes from:
+    
+          155┆ messageType, p, err := conn.ReadMessage()
+    
+    
+          Taint flows through these intermediate variables:
+    
+          155┆ messageType, p, err := conn.ReadMessage()
+    
+          156┆ email := string(p)
+    
+    
+                This is how taint reaches the sink:
+    
+          179┆ Path: email,
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          205┆ cmd := &exec.Cmd {
+          206┆     // Path is the path of the command to run.
+          207┆     // ruleid: gorilla-command-injection-taint
+          208┆     Path: email,
+          209┆     // Args holds command line arguments, including the command as Args[0].
+          210┆     Args: []string{ "tr", "--help" },
+          211┆     Stdout: os.Stdout,
+          212┆     Stderr: os.Stderr,
+          213┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          208┆ Path: email,
+    
+    
+          Taint comes from:
+    
+          203┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+          203┆ email := session.Values["email"]
+    
+    
+                This is how taint reaches the sink:
+    
+          208┆ Path: email,
+    
+    
+            ⋮┆----------------------------------------
+          225┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+    
+    
+          Taint comes from:
+    
+          203┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+          203┆ email := session.Values["email"]
+    
+          222┆ cmd3Input := fmt.Sprintf("ls %s", email)
+    
+    
+                This is how taint reaches the sink:
+    
+          225┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-command-write.dangerous-command-write
+          Detected non-static command inside Write. Audit the input to 'cmd3Writer.Write'. If unverified user
+          data can reach this call site, this is a code injection vulnerability. A malicious actor can inject
+          a malicious script to execute arbitrary code.                                                      
+          Details: https://sg.run/Bko5                                                                       
+                                                                                                             
+          225┆ cmd3Writer.Write([]byte(cmd3Input + "\n"))
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          228┆ io.WriteString(cmd3Writer, cmd3Input)
+    
+    
+          Taint comes from:
+    
+          203┆ email := session.Values["email"]
+    
+    
+          Taint flows through these intermediate variables:
+    
+          203┆ email := session.Values["email"]
+    
+          222┆ cmd3Input := fmt.Sprintf("ls %s", email)
+    
+    
+                This is how taint reaches the sink:
+    
+          228┆ io.WriteString(cmd3Writer, cmd3Input)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-syscall-exec.dangerous-syscall-exec
+          Detected non-static command inside Exec. Audit the input to 'syscall.Exec'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/0QRb                                                                       
+                                                                                                             
+          232┆ syscall.Exec("echo " + cmd4Input)
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          249┆ cmd := &exec.Cmd {
+          250┆     // Path is the path of the command to run.
+          251┆     // ruleid: gorilla-command-injection-taint
+          252┆     Path: person.Name,
+          253┆     // Args holds command line arguments, including the command as Args[0].
+          254┆     Args: []string{ "tr", "--help" },
+          255┆     Stdout: os.Stdout,
+          256┆     Stderr: os.Stderr,
+          257┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          252┆ Path: person.Name,
+    
+    
+          Taint comes from:
+    
+          252┆ Path: person.Name,
+    
+    
+                This is how taint reaches the sink:
+    
+          252┆ Path: person.Name,
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          280┆ cmd := &exec.Cmd {
+          281┆     // Path is the path of the command to run.
+          282┆     // ruleid: gorilla-command-injection-taint
+          283┆     Path: value["foo"],
+          284┆     // Args holds command line arguments, including the command as Args[0].
+          285┆     Args: []string{ "tr", "--help" },
+          286┆     Stdout: os.Stdout,
+          287┆     Stderr: os.Stderr,
+          288┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          283┆ Path: value["foo"],
+    
+    
+          Taint comes from:
+    
+          283┆ Path: value["foo"],
+    
+    
+                This is how taint reaches the sink:
+    
+          283┆ Path: value["foo"],
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          306┆ cmd := &exec.Cmd {
+          307┆     // Path is the path of the command to run.
+          308┆     // ruleid: gorilla-command-injection-taint
+          309┆     Path: value["foo"],
+          310┆     // Args holds command line arguments, including the command as Args[0].
+          311┆     Args: []string{ "tr", "--help" },
+          312┆     Stdout: os.Stdout,
+          313┆     Stderr: os.Stderr,
+          314┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          309┆ Path: value["foo"],
+    
+    
+          Taint comes from:
+    
+          309┆ Path: value["foo"],
+    
+    
+                This is how taint reaches the sink:
+    
+          309┆ Path: value["foo"],
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ go.gorilla.security.audit.websocket-missing-origin-check.websocket-missing-origin-check
+          The Origin header in the HTTP WebSocket handshake is used to guarantee that the connection accepted
+          by the WebSocket is from a trusted origin domain. Failure to enforce can lead to Cross Site Request
+          Forgery (CSRF). As per "gorilla/websocket" documentation: "A CheckOrigin function should carefully 
+          validate the request origin to prevent cross-site request forgery."                                
+          Details: https://sg.run/xXpz                                                                       
+                                                                                                             
+          329┆ conn, err := upgrader.Upgrade(w, r, nil)
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          333┆ cmd := &exec.Cmd {
+          334┆     // Path is the path of the command to run.
+          335┆     // ruleid: gorilla-command-injection-taint
+          336┆     Path: email,
+          337┆     // Args holds command line arguments, including the command as Args[0].
+          338┆     Args: []string{ "tr", "--help" },
+          339┆     Stdout: os.Stdout,
+          340┆     Stderr: os.Stderr,
+          341┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          336┆ Path: email,
+    
+    
+          Taint comes from:
+    
+          330┆ messageType, p, err := conn.ReadMessage()
+    
+    
+          Taint flows through these intermediate variables:
+    
+          330┆ messageType, p, err := conn.ReadMessage()
+    
+          331┆ email := string(p)
+    
+    
+                This is how taint reaches the sink:
+    
+          336┆ Path: email,
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.dangerous-exec-cmd.dangerous-exec-cmd
+          Detected non-static command inside exec.Cmd. Audit the input to 'exec.Cmd'. If unverified user data
+          can reach this call site, this is a code injection vulnerability. A malicious actor can inject a   
+          malicious script to execute arbitrary code.                                                        
+          Details: https://sg.run/Dorj                                                                       
+                                                                                                             
+          351┆ cmd = &exec.Cmd {
+          352┆     // Path is the path of the command to run.
+          353┆     // ruleid: gorilla-command-injection-taint
+          354┆     Path: email,
+          355┆     // Args holds command line arguments, including the command as Args[0].
+          356┆     Args: []string{ "tr", "--help" },
+          357┆     Stdout: os.Stdout,
+          358┆     Stderr: os.Stderr,
+          359┆ }
+   
+   ❯❯❱ go.gorilla.command-injection.gorilla-command-injection-taint.gorilla-command-injection-taint
+          Untrusted input might be injected into a command executed by the application, which can lead to a   
+          command injection vulnerability. An attacker can execute arbitrary commands, potentially gaining    
+          complete control of the system. To prevent this vulnerability, avoid executing OS commands with user
+          input. If this is unavoidable, validate and sanitize the input, and use safe methods for executing  
+          the commands. In Go, it is possible to use the `exec.Command` function in combination with the `bash
+          -c` command to run the user input as a shell command. To sanitize the user input, you can use a     
+          library like `shellescape` to escape any special characters before constructing the command. For    
+          more information, see: [Go command injection prevention](https://semgrep.dev/docs/cheat-sheets/go-  
+          command-injection/)                                                                                 
+          Details: https://sg.run/1w75                                                                        
+                                                                                                              
+          354┆ Path: email,
+    
+    
+          Taint comes from:
+    
+          330┆ messageType, p, err := conn.ReadMessage()
+    
+    
+          Taint flows through these intermediate variables:
+    
+          330┆ messageType, p, err := conn.ReadMessage()
+    
+          331┆ email := string(p)
+    
+    
+                This is how taint reaches the sink:
+    
+          354┆ Path: email,
+    
+                                                                       
+  [36m[22m[24m  go/gorilla-go-vanillasql-format-string-sqli-taint.go[0m
+    ❯❱ go.lang.security.audit.database.string-formatted-query.string-formatted-query
+          String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized
+          properly. Audit this call to ensure the SQL is not manipulable by external data.                    
+          Details: https://sg.run/ydEr                                                                        
+                                                                                                              
+           31┆ query := "SELECT name FROM users WHERE email=" + email
+   
+   ❯❯❱ go.lang.security.audit.sqli.gosql-sqli.gosql-sqli
+          Detected string concatenation with a non-literal variable in a "database/sql" Go SQL statement. This
+          could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order 
+          to prevent SQL injection, use parameterized queries or prepared statements instead. You can use     
+          prepared statements with the 'Prepare' and 'PrepareContext' calls.                                  
+          Details: https://sg.run/YgOX                                                                        
+                                                                                                              
+           33┆ db.Query(query)
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-
+       sqli-taint-med-conf                                                                                        
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/rG9W                                                                        
+                                                                                                              
+           33┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 25 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           33┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/bdBQ                                                                        
+                                                                                                              
+           33┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 25 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           33┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ go.lang.security.audit.database.string-formatted-query.string-formatted-query
+          String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized
+          properly. Audit this call to ensure the SQL is not manipulable by external data.                    
+          Details: https://sg.run/ydEr                                                                        
+                                                                                                              
+           49┆ query := "SELECT name FROM users WHERE age=" + person.Name
+   
+   ❯❯❱ go.lang.security.audit.sqli.gosql-sqli.gosql-sqli
+          Detected string concatenation with a non-literal variable in a "database/sql" Go SQL statement. This
+          could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order 
+          to prevent SQL injection, use parameterized queries or prepared statements instead. You can use     
+          prepared statements with the 'Prepare' and 'PrepareContext' calls.                                  
+          Details: https://sg.run/YgOX                                                                        
+                                                                                                              
+           52┆ db.Query(query)
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-
+       sqli-taint-med-conf                                                                                        
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/rG9W                                                                        
+                                                                                                              
+           52┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           52┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/bdBQ                                                                        
+                                                                                                              
+           52┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           52┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ go.lang.security.audit.database.string-formatted-query.string-formatted-query
+          String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized
+          properly. Audit this call to ensure the SQL is not manipulable by external data.                    
+          Details: https://sg.run/ydEr                                                                        
+                                                                                                              
+           73┆ query := "SELECT name FROM users WHERE age=" + value["query"]
+   
+   ❯❯❱ go.lang.security.audit.sqli.gosql-sqli.gosql-sqli
+          Detected string concatenation with a non-literal variable in a "database/sql" Go SQL statement. This
+          could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order 
+          to prevent SQL injection, use parameterized queries or prepared statements instead. You can use     
+          prepared statements with the 'Prepare' and 'PrepareContext' calls.                                  
+          Details: https://sg.run/YgOX                                                                        
+                                                                                                              
+           75┆ db.Query(query)
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-
+       sqli-taint-med-conf                                                                                        
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/rG9W                                                                        
+                                                                                                              
+           75┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           75┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/bdBQ                                                                        
+                                                                                                              
+           75┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           75┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.lang.security.audit.sqli.gosql-sqli.gosql-sqli
+          Detected string concatenation with a non-literal variable in a "database/sql" Go SQL statement. This
+          could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order 
+          to prevent SQL injection, use parameterized queries or prepared statements instead. You can use     
+          prepared statements with the 'Prepare' and 'PrepareContext' calls.                                  
+          Details: https://sg.run/YgOX                                                                        
+                                                                                                              
+           92┆ db.Query(query)
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-
+       sqli-taint-med-conf                                                                                        
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/rG9W                                                                        
+                                                                                                              
+           92┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           92┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/bdBQ                                                                        
+                                                                                                              
+           92┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 87 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+           92┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+    ❯❱ go.lang.security.audit.database.string-formatted-query.string-formatted-query
+          String-formatted SQL query detected. This could lead to SQL injection if the string is not sanitized
+          properly. Audit this call to ensure the SQL is not manipulable by external data.                    
+          Details: https://sg.run/ydEr                                                                        
+                                                                                                              
+          112┆ query := "SELECT name FROM users WHERE email=" + email
+   
+   ❯❯❱ go.lang.security.audit.sqli.gosql-sqli.gosql-sqli
+          Detected string concatenation with a non-literal variable in a "database/sql" Go SQL statement. This
+          could lead to SQL injection if the variable is user-controlled and not properly sanitized. In order 
+          to prevent SQL injection, use parameterized queries or prepared statements instead. You can use     
+          prepared statements with the 'Prepare' and 'PrepareContext' calls.                                  
+          Details: https://sg.run/YgOX                                                                        
+                                                                                                              
+          114┆ db.Query(query)
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint-med-conf.gorilla-go-vanillasql-format-string-
+       sqli-taint-med-conf                                                                                        
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/rG9W                                                                        
+                                                                                                              
+          114┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 103 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+          114┆ db.Query(query)
+    
+    
+            ⋮┆----------------------------------------
+   
+   ❯❯❱ go.gorilla.sql.gorilla-go-vanillasql-format-string-sqli-taint.gorilla-go-vanillasql-format-string-sqli-taint
+          Untrusted input might be used to build a database query, which can lead to a SQL injection          
+          vulnerability. An attacker can execute malicious SQL statements and gain unauthorized access to     
+          sensitive data, modify, delete data, or execute arbitrary system commands. To prevent this          
+          vulnerability, use prepared statements that do not concatenate user-controllable strings and use    
+          parameterized queries where SQL commands and user data are strictly separated. Also, consider using 
+          an object-relational (ORM) framework to operate with safer abstractions. When building SQL queries  
+          in Go, it is possible to adopt prepared statements by using the `Prepare` and `PrepareContext` calls
+          with parameterized queries. For more information, see: [Prepared statements in                      
+          Go](https://go.dev/doc/database/prepared-statements).                                               
+          Details: https://sg.run/bdBQ                                                                        
+                                                                                                              
+          114┆ db.Query(query)
+    
+    
+          Taint comes from:
+    
+            3┆ import (
+    
+            4┆     "os"
+    
+            5┆    "fmt"
+    
+            6┆    "net/http"
+    
+            7┆    "github.com/go-sql-driver/mysql"
+    
+            8┆    "database/sql"
+    
+            9┆     "github.com/gin-gonic/gin"
+    
+           10┆     "github.com/gorilla/schema"
+    
+           11┆     "github.com/gorilla/rpc"
+    
+           12┆     "github.com/gorilla/securecookie"
+    
+             [hid 103 additional lines, adjust with --max-lines-per-finding] 
+    
+    
+                This is how taint reaches the sink:
+    
+          114┆ db.Query(query)
+    
+
